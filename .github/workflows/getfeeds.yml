@@ -1,0 +1,60 @@
+name: getfeeds
+
+on:
+  # 手动触发事件
+  workflow_dispatch:
+
+
+jobs:
+  release:
+    name: Build and Release for ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            sdk_url_path: https://archive.openwrt.org/releases/21.02.1/targets/x86/64/
+            sdk_name: -sdk-x86-64_
+
+    env:
+      PACKAGE_NAME: luci-app-oaf
+      SDK_URL_PATH: ${{ matrix.sdk_url_path }}
+      SDK_NAME: ${{ matrix.sdk_name }}
+      ARCH: ${{ matrix.arch }}
+      CACHE_DIR: ~/cache
+
+    steps:
+      - uses: actions/checkout@v2
+                
+      - name: Create Directories
+        run: |
+          echo "SDK_HOME=$(mktemp -d)" >> $GITHUB_ENV
+          echo "SDK_DL_DIR=$(mktemp -d)" >> $GITHUB_ENV
+          
+      - name: Prepare Build Environment
+        run: |
+          cd "$SDK_DL_DIR"
+          if ! ( wget -q -O - "$SDK_URL_PATH/sha256sums" | grep -- "$SDK_NAME" > sha256sums.small 2>/dev/null ) ; then
+            echo "Can not find ${SDK_NAME} file in sha256sums."
+            exit 1
+          fi
+          SDK_FILE="$(cat sha256sums.small | cut -d' ' -f2 | sed 's/*//g')"
+          wget -q -O "$SDK_FILE" "$SDK_URL_PATH/$SDK_FILE"
+          if ! sha256sum -c ./sha256sums.small >/dev/null 2>&1 ; then
+            echo "SDK can not be verified!"
+            exit 1
+          fi
+          tar -Jxf "$SDK_DL_DIR/$SDK_FILE" -C "$SDK_HOME" --strip=1
+          
+      - name: Build Packages
+        run: |
+          cd "$SDK_HOME"
+          ./scripts/feeds update -a > /dev/null 2>&1
+           
+      - name: Release and Upload Assets
+        uses: actions/upload-artifact@v2
+        with:
+          path: "$SDK_HOME/scripts/feeds/"
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
