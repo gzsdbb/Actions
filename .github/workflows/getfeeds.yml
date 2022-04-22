@@ -54,6 +54,6 @@ jobs:
       - name: Release and Upload Assets
         uses: actions/upload-artifact@v2
         with:
-          path: "$SDK_HOME/feeds/"
+          path: $SDK_HOME/feeds/
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
