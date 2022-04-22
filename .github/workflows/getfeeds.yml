@@ -15,7 +15,7 @@ jobs:
         include:
           - arch: x86_64
             sdk_url_path: https://archive.openwrt.org/releases/21.02.1/targets/x86/64/
-            sdk_name: -sdk-x86-64_
+            sdk_name: -sdk_
 
     env:
       SDK_URL_PATH: ${{ matrix.sdk_url_path }}
