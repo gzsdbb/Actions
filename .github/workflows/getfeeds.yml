@@ -18,7 +18,6 @@ jobs:
             sdk_name: -sdk-x86-64_
 
     env:
-      PACKAGE_NAME: luci-app-oaf
       SDK_URL_PATH: ${{ matrix.sdk_url_path }}
       SDK_NAME: ${{ matrix.sdk_name }}
       ARCH: ${{ matrix.arch }}
@@ -35,17 +34,8 @@ jobs:
       - name: Prepare Build Environment
         run: |
           cd "$SDK_DL_DIR"
-          if ! ( wget -q -O - "$SDK_URL_PATH/sha256sums" | grep -- "$SDK_NAME" > sha256sums.small 2>/dev/null ) ; then
-            echo "Can not find ${SDK_NAME} file in sha256sums."
-            exit 1
-          fi
-          SDK_FILE="$(cat sha256sums.small | cut -d' ' -f2 | sed 's/*//g')"
-          wget -q -O "$SDK_FILE" "$SDK_URL_PATH/$SDK_FILE"
-          if ! sha256sum -c ./sha256sums.small >/dev/null 2>&1 ; then
-            echo "SDK can not be verified!"
-            exit 1
-          fi
-          tar -Jxf "$SDK_DL_DIR/$SDK_FILE" -C "$SDK_HOME" --strip=1
+          wget -q -O "$openwrt-sdk-21.02.1-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz" "https://archive.openwrt.org/releases/21.02.1/targets/x86/64/openwrt-sdk-21.02.1-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz"
+          tar -Jxf "$SDK_DL_DIR/openwrt-sdk-21.02.1-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz" -C "$SDK_HOME" --strip=1
           
       - name: Build Packages
         run: |
