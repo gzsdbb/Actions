@@ -50,10 +50,11 @@ jobs:
         run: |
           cd "$SDK_HOME"
           ./scripts/feeds update -a > /dev/null 2>&1
+          Copy 'feeds/' '${{ github.workspace }}/Artifacts'
            
       - name: Release and Upload Assets
         uses: actions/upload-artifact@v2
         with:
-          path: $SDK_HOME/feeds/
+          path: ${{ github.workspace }}/Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
