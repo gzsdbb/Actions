@@ -38,7 +38,7 @@ jobs:
     - name: Packing
       run: |      
        cd &MATRIX_DIRECTORY
-       ./makeself.sh --nox11 ./$IPKS_DIRECTORY &IPKS_DIRECTORY.run "OneClick install" ./$IPKS_INSTALL
+       ./makeself.sh --nox11 $GITHUB_WORKSPACE/$IPKS_DIRECTORY &IPKS_DIRECTORY.run "OneClick install" ./$IPKS_INSTALL
 
     - name: Upload bin directory
       uses: actions/upload-artifact@main
