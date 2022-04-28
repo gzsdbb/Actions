@@ -16,7 +16,7 @@ on:
 env:
  MAKESELF_URL: https://github.com/megastep/makeself
  MAKESELF_BRANCH: master
- MATRIX_DIRECTORY: ${{GITHUB_WORKSPACE}}/makeself
+ MATRIX_DIRECTORY: ${GITHUB_WORKSPACE}/makeself
  IPKS_DIRECTORY: ${{ github.event.inputs.ipkdirectory }}
  IPKS_INSTALL: ${{ github.event.inputs.ipkinstall }}
  TZ: Asia/Shanghai
