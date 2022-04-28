@@ -26,8 +26,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu--latest
-  
-  steps:
+
+    steps:
     - name: Checkout
       uses: actions/checkout@main
  
@@ -43,5 +43,5 @@ jobs:
     - name: Upload bin directory
       uses: actions/upload-artifact@main
       with:
-       name: ${{ env.MATRIX_DIRECTORY}}
-       path: ${{ env.MATRIX_DIRECTORY }}
+       name: ${{ env.IPKS_DIRECTORY}}
+       path: ${{ env.MATRIX_DIRECTORY }}/${{ env.IPKS_DIRECTORY}}.run
