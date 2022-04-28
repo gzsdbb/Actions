@@ -5,11 +5,11 @@ on:
   workflow_dispatch:
     inputs:
       ipkdirectory:
-        description: 'name: 要打包的目录, 例如: "XXX 默认打包 ipks'
+        description: '要打包的目录, 例如: "XXX 默认打包 ipks'
         required: true
         default: 'ipks'
       ipkinstall:
-        description: 'name: 自动运行的文件, 例如: "XXX.sh 默认install.sh'
+        description: '自动运行的文件, 例如: "XXX.sh 默认install.sh'
         required: true
         default: 'install.sh'
         
