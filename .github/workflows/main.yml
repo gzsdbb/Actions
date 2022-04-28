@@ -1,0 +1,47 @@
+name: Pack IPKs
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ipkdirectory:
+        description: 'pack applications, eg: "ipks default pack ipks'
+        required: true
+        default: 'ipks'
+      ipkinstall:
+        description: 'pack applications, eg: "ipk default install.sh'
+        required: true
+        default: 'install.sh'
+        
+
+
+env:
+ MAKESELF_URL: https://github.com/megastep/makeself
+ MAKESELF_BRANCH: master
+ MATRIX_DIRECTORY: ${GITHUB_WORKSPACE}/makeself
+ IPKS_DIRECTORY: ${{ github.event.inputs.ipkdirectory }}
+ IPKS_INSTALL: ${{ github.event.inputs.ipkinstall }}
+ TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu--latest
+  
+  steps:
+    - name: Checkout
+      uses: actions/checkout@main
+ 
+    - name: Clone source code
+      run: |
+        git clone $MAKESELF_URL -b $MAKESELF_BRANCH $MATRIX_DIRECTORY
+
+    - name: Packing
+      run: |      
+       cd &MATRIX_DIRECTORY
+       ./makeself.sh --nox11 ./$IPKS_DIRECTORY &IPKS_DIRECTORY.run "OneClick install" ./$IPKS_INSTALL
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      with:
+       name: ${{ env.MATRIX_DIRECTORY}}
+       path: ${{ env.MATRIX_DIRECTORY }}
