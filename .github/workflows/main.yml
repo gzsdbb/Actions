@@ -5,16 +5,14 @@ on:
   workflow_dispatch:
     inputs:
       ipkdirectory:
-        description: 'pack applications, eg: "ipks default pack ipks'
+        description: 'name: 要打包的目录, 例如: "XXX 默认打包 ipks'
         required: true
         default: 'ipks'
       ipkinstall:
-        description: 'pack applications, eg: "ipk default install.sh'
+        description: 'name: 自动运行的文件, 例如: "XXX.sh 默认install.sh'
         required: true
         default: 'install.sh'
         
-
-
 env:
  MAKESELF_URL: https://github.com/megastep/makeself
  MAKESELF_BRANCH: master
@@ -25,6 +23,7 @@ env:
 
 jobs:
   build:
+    name: Pack IPKs
     runs-on: ubuntu--latest
 
     steps:
@@ -40,7 +39,7 @@ jobs:
        cd &MATRIX_DIRECTORY
        ./makeself.sh --nox11 $GITHUB_WORKSPACE/$IPKS_DIRECTORY &IPKS_DIRECTORY.run "OneClick install" ./$IPKS_INSTALL
 
-    - name: Upload bin directory
+    - name: Upload ipks
       uses: actions/upload-artifact@main
       with:
        name: ${{ env.IPKS_DIRECTORY}}
