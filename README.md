@@ -13,6 +13,7 @@ iStoreOS 离线包不是一个压缩包，也没啥黑科技，而是借助第�
   install.sh文件简单内容为
   
 opkg update
+
 opkg install *.ipk
 
 更高级的脚本可以自己研究
