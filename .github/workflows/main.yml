@@ -37,7 +37,6 @@ jobs:
     - name: Invoke ready
       run: |
        chmod +x apps/ready.sh
-       cd ${GITHUB_WORKSPACE}
        ./apps/ready.sh
 
 
