@@ -45,8 +45,8 @@ jobs:
         
     - name: Invoke ready
       run: |
-       chmod +x apps/ready.sh
-       ./apps/ready.sh
+       chmod +x ready.sh
+       ./ready.sh
 
 
     - name: Packing
