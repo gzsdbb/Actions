@@ -33,6 +33,12 @@ jobs:
     - name: Clone source code
       run: |
         git clone $MAKESELF_URL -b $MAKESELF_BRANCH $MATRIX_DIRECTORY
+        
+    - name: Invoke ready
+      run: |
+       chmod +x apps/ready.sh
+       ./apps/ready.sh
+
 
     - name: Packing
       run: |   
