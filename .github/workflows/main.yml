@@ -53,7 +53,7 @@ jobs:
       run: |   
        chmod -R 777 $IPKS_DIRECTORY
        cd $MATRIX_DIRECTORY
-       ./makeself.sh --nox11 $GITHUB_WORKSPACE/$IPKS_DIRECTORY &IPKS_DIRECTORY.run "OneClick install" ./$IPKS_INSTALL
+       ./makeself.sh --nox11 $GITHUB_WORKSPACE/$IPKS_DIRECTORY $IPKS_DIRECTORY.run "OneClick install" ./$IPKS_INSTALL
 
     - name: Upload ipks
       uses: actions/upload-artifact@main
