@@ -32,12 +32,12 @@ jobs:
       
     - name: Initialization environment
       env:
-          DEBIAN_FRONTEND: noninteractive
+        DEBIAN_FRONTEND: noninteractive
       run: |
-          sudo -E apt-get -qq update
-          sudo -E apt-get -qq install bzip2 git unzip p7zip p7zip-full
-          sudo -E apt-get -qq clean
-          sudo timedatectl set-timezone "$TZ"
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install bzip2 git unzip p7zip p7zip-full
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
  
     - name: Clone source code
       run: |
