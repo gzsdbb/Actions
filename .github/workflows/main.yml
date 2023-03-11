@@ -24,7 +24,7 @@ env:
 jobs:
   build:
     name: Pack IPKs
-    runs-on: ubuntu--latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
